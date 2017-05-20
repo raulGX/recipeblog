@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace BdRestServer.Controllers
@@ -67,6 +68,27 @@ namespace BdRestServer.Controllers
             var responseRecipe = dict.FirstOrDefault();
             responseRecipe.Add("ingredients", ingredients);
             return Request.CreateResponse(HttpStatusCode.OK, responseRecipe);
+        }
+
+        [Filters.UserAuthFilter]
+        public HttpResponseMessage Post([FromBody]dynamic value) {
+            MySqlConnection conn = DBHelper.conn;
+            int insertOk = 0;
+            try {
+                var command = conn.CreateCommand();
+                command.CommandText = $"INSERT INTO `recipes` (`recipe_name`, `description`, `userid`) VALUES('{value.name}', '{value.description}', '{Thread.CurrentPrincipal.Identity.Name}')";
+                conn.Open();
+                insertOk = command.ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
+            conn.Close();
+
+            if (insertOk > 0)
+                return Request.CreateResponse(HttpStatusCode.OK);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "error inserting in db");
         }
     }
 }
