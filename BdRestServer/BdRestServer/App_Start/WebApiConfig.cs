@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
+using System.Web.Http.Cors;
 
 namespace BdRestServer
 {
@@ -15,6 +16,8 @@ namespace BdRestServer
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 

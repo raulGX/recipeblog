@@ -43,8 +43,13 @@
     "whatwg-fetch": "2.0.3"
   },
   "dependencies": {
+    "axios": "^0.16.1",
+    "bootstrap": "^3.3.7",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "toastr": "^2.1.2"
   },
   "scripts": {
     "start": "node scripts/start.js",
