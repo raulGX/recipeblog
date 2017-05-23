@@ -6,7 +6,7 @@ class Header extends React.Component {
     super(props)
     this.toggleMenu = this.toggleMenu.bind(this)
     this.state = { showMenu: false }
-    this.showMenu = false;
+    this.showMenu = false
   }
   toggleMenu() {
     if (this.showMenu === false) {
@@ -34,6 +34,7 @@ class Header extends React.Component {
           <li className="dropdown">
             <a className="dropdown-toggle" data-toggle="dropdown" onClick={this.toggleMenu} role="button">My account <span className="caret"></span></a>
             <ul ref={input => this.menu = input} className={"dropdown-menu display-" + this.state.showMenu}>
+              <li><NavLink to="/myrecipes" activeClassName="active">My Recipes</NavLink></li>
               <li><NavLink to="/" onClick={this.logout} activeClassName="active">Logout</NavLink></li>
             </ul>
           </li>
@@ -47,7 +48,6 @@ class Header extends React.Component {
             <li><NavLink to="/recipes" activeClassName="active">Recipes</NavLink></li>
             <li><NavLink to="/ingredients" activeClassName="active">Ingredients</NavLink></li>
             <li><NavLink to="/categories" activeClassName="active">Ingredient Categories</NavLink></li>
-
           </ul>
           {loginSide}
         </nav>

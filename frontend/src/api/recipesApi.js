@@ -10,6 +10,14 @@ class RecipesApi {
     return axios.get(constants.api + 'recipes/' + id)
       .catch(error => error)
   }
+  static getMyRecipes(token) {
+    return axios.get(constants.api + 'myrecipes',{
+      headers: {
+        "authorization": token
+      }
+    })
+      .catch(error => error)
+  }
 }
 
 export default RecipesApi;

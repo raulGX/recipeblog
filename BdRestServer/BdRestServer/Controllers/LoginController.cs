@@ -20,7 +20,7 @@ namespace BdRestServer.Controllers
             try
             {
                 var command = conn.CreateCommand();
-                command.CommandText = $"SELECT userid, email, password FROM users WHERE email='{value.email}' AND password='{value.password}'";
+                command.CommandText = $"SELECT userid, email, password, is_admin FROM users WHERE email='{value.email}' AND password='{value.password}'";
                 conn.Open();
                 response = SerializeHelper.Serialize(command.ExecuteReader());
             }
@@ -37,9 +37,9 @@ namespace BdRestServer.Controllers
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             Dictionary<string, object> user = response.FirstOrDefault();
-
+            bool isAdmin = Convert.ToBoolean(user["is_admin"]);
             string token = TokenHelper.CreateUserToken(user);
-            return Request.CreateResponse(HttpStatusCode.OK, new { token = token });
+            return Request.CreateResponse(HttpStatusCode.OK, new { token = token,  isAdmin = isAdmin});
         }
     }
 }

@@ -8,11 +8,14 @@ import Login from './components/common/Login';
 import Register from './components/common/Register';
 import HomePage from './components/home/HomePage';
 import RecipePage from './components/recipes/RecipePage';
+import MyRecipes from './components/recipes/MyRecipes';
+import MyRecipe from './components/recipes/MyRecipe';
 import SpecificRecipePage from './components/recipes/SpecificRecipePage';
 
 import IngredientsPage from './components/ingredients/IngredientsPage';
 import CategoriesPage from './components/categories/CategoriesPage';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css'
 
 render(
@@ -21,6 +24,8 @@ render(
       <Header />
       <Route exact path='/' component={HomePage} />
       <Route exact path='/recipes' component={RecipePage} />
+      <Route exact path='/myrecipes' component={MyRecipes} />
+      <Route path='/myrecipes/:recipeId' component={MyRecipe} />
       <Route path='/recipes/:recipeId' component={SpecificRecipePage} />
       <Route path='/ingredients' component={IngredientsPage} />
       <Route path='/categories' component={CategoriesPage} />

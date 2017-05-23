@@ -12,7 +12,11 @@ class Login extends React.Component {
     loginApi.login(email.value, password.value)
       .then(response => {
         let token = response.data.token
+        let isAdmin = response.data.isAdmin
+
         window.localStorage.setItem("token", token)
+        window.localStorage.setItem("isAdmin", "" + isAdmin)
+
         window.location.reload()
         this.props.history.push('/')
       })
