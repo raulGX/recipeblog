@@ -1,6 +1,6 @@
 import React from 'react'
-
-const IngredientsTable = ({ ingredients, myKey }) => {
+import { Button } from 'react-bootstrap';
+const IngredientsTable = ({ ingredients, myKey, quantity, deleteIngredient }) => {
   let rows = [];
   for (let i in ingredients) {
     let row = ingredients[i]
@@ -10,6 +10,9 @@ const IngredientsTable = ({ ingredients, myKey }) => {
         <td>{row.measure_unit}</td>
         <td>{row.calories || 'not defined'}</td>
         <td>{row.catname}</td>
+        {quantity && <td>{row.quantity}</td>}
+        {deleteIngredient && <Button className="btn-danger pull-right" onClick={() => deleteIngredient(row.ingredientid)} bsSize="xsmall" >Delete</Button>}
+
       </tr>
     )
   }
@@ -21,6 +24,7 @@ const IngredientsTable = ({ ingredients, myKey }) => {
           <th>Measure Unit</th>
           <th>Calories</th>
           <th>Category</th>
+          {quantity && <th>Quantity</th>}
         </tr>
       </thead>
       <tbody>

@@ -16,8 +16,23 @@ class MyRecipe extends React.Component {
     this.addIngredientToRecipe = this.addIngredientToRecipe.bind(this)
     this.getIngredients = this.getIngredients.bind(this)
     this.getRecipe = this.getRecipe.bind(this)
+    this.deleteRecipe = this.deleteRecipe.bind(this)
+    this.deleteIngredient = this.deleteIngredient.bind(this)
   }
-
+  deleteIngredient(id) {
+    let token = 'Basic ' + localStorage.getItem('token')
+    recipesApi.deleteIngredientFromRecipe(id, this.props.match.params.recipeId, token)
+      .then( () => {
+         this.getRecipe(this.props.match.params.recipeId)
+      }).catch(error => alert('error deleting'))
+  }
+  deleteRecipe() {
+    let token = 'Basic ' + localStorage.getItem('token')
+    recipesApi.deleteRecipe(token, this.props.match.params.recipeId)
+      .then(() => {
+        this.props.history.push('/myrecipes')
+      }).catch(error => alert('error inserting'))
+  }
   componentDidMount() {
     this.getIngredients()
     this.getRecipe(this.props.match.params.recipeId)
@@ -78,30 +93,32 @@ class MyRecipe extends React.Component {
             (
               <div>
                 <h1>{this.state.recipe_name}
-                  <span className="pull-right">{this.state.rating === null ? "" : "Rating: " + this.state.rating}</span>
                 </h1>
                 <div>
                   <p>{this.state.description}</p>
                   <Button onClick={this.openModal}>Add Ingredient</Button>
+                  <Button className="btn-danger pull-right" onClick={this.deleteRecipe}>Delete</Button>
                   <Modal show={this.state.showModal} onHide={this.closeModal}>
                     <Modal.Header closeButton>
                       <Modal.Title>Add an ingredient</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                      <ControlLabel>Select ingredient</ControlLabel>
+                      <FormControl inputRef={input => this.ingredient = input} componentClass="select">
+                        {ingredientsRows}
+                      </FormControl>
+                      <br />
                       <div className="input-group">
                         <label>Quantity</label>
                         <input ref={input => this.quantity = input} type="text" className="form-control" placeholder="Quantity" />
                       </div>
-                      <ControlLabel>Select</ControlLabel>
-                      <FormControl inputRef={input => this.ingredient = input} componentClass="select">
-                        {ingredientsRows}
-                      </FormControl>
+                      <br />
                       <button className="btn btn-default" type="submit" onClick={this.addIngredientToRecipe}>Add</button>
                       <br />
                     </Modal.Body>
                   </Modal>
                   <h3>Ingredients: </h3>
-                  <IngredientsTable ingredients={this.state.ingredients} myKey="myrecipe" />
+                  <IngredientsTable ingredients={this.state.ingredients} deleteIngredient={this.deleteIngredient} myKey="myrecipe" quantity="true" />
                 </div>
               </div>) : (
               <p>Loading...</p>

@@ -21,13 +21,11 @@ class SpecificRecipePage extends React.Component {
           this.state.loaded ?
             (
               <div>
-                <h1>{this.state.recipe_name}
-                  <span className="pull-right">{this.state.rating === null ? "" : "Rating: " + this.state.rating}</span>
-                </h1>
+                <h1>{this.state.recipe_name}</h1>
                 <div>
                   <p>{this.state.description}</p>
                   <h3>Ingredients: </h3>
-                  <IngredientsTable ingredients={this.state.ingredients} myKey="recipespecific"/>
+                  <IngredientsTable ingredients={this.state.ingredients} myKey="recipespecific" quantity="true"/>
                 </div>
               </div>) : (
               <p>Loading...</p>

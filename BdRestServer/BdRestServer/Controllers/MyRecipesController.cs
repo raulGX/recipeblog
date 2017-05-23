@@ -36,5 +36,60 @@ namespace BdRestServer.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, dict);
         }
+
+        [Route("api/myRecipes/{recipeId}")]
+        [Filters.UserAuthFilter]
+        public HttpResponseMessage Delete(int recipeId) {
+            MySqlConnection conn = DBHelper.conn;
+            int ok = 0;
+            try {
+                var command = conn.CreateCommand();
+                command.CommandText = $"DELETE from ingredients_to_recipes where recipeid = {recipeId}";
+                conn.Open();
+                conn.Close();
+
+                command = conn.CreateCommand();
+                command.CommandText = $"DELETE from recipes where recipeid = {recipeId}";
+                conn.Open();
+                ok = command.ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                ok = 0;
+            }
+            finally {
+                conn.Close();
+            }
+            if (ok < 1)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+        [Route("api/myRecipes/ingredients/{recipe}")]
+        public HttpResponseMessage Delete(string recipe) {
+            var array = recipe.Split(',');
+            int ingredientid = Convert.ToInt32(array[0]);
+            int recipeid = Convert.ToInt32(array[1]);
+            MySqlConnection conn = DBHelper.conn;
+            int ok = 0;
+            try {
+                var command = conn.CreateCommand();
+                command.CommandText = $"DELETE from ingredients_to_recipes where recipeid={recipeid} AND ingredientid={ingredientid}";
+                conn.Open();
+                ok = command.ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
+            finally {
+                conn.Close();
+            }
+            if (ok < 1)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
     }
 }
