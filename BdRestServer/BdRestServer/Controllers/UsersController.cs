@@ -30,8 +30,9 @@ namespace BdRestServer.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (dict == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest);

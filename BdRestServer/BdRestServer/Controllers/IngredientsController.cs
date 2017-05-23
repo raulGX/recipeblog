@@ -24,8 +24,9 @@ namespace BdRestServer.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (dict == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -49,7 +50,9 @@ namespace BdRestServer.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (insertOk > 0)
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -74,8 +77,9 @@ namespace BdRestServer.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-            conn.Close();
-
+            finally {
+                conn.Close();
+            }
             if (insertOk > 0)
                 return Request.CreateResponse(HttpStatusCode.OK);
             else

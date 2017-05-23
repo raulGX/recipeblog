@@ -18,7 +18,7 @@ namespace BdRestServer.Controllers
 
             try {
                 var command = conn.CreateCommand();
-                command.CommandText = "SELECT recipeid, recipe_name, rating, CONCAT(`last_name`, ' ', `first_name`) as user  FROM recipes, users WHERE recipes.userid = users.userid";
+                command.CommandText = "SELECT recipeid, recipe_name, CONCAT(`last_name`, ' ', `first_name`) as user  FROM recipes, users WHERE recipes.userid = users.userid";
                 conn.Open();
                 dict = SerializeHelper.Serialize(command.ExecuteReader());
             }
@@ -49,7 +49,7 @@ namespace BdRestServer.Controllers
 
                 //get ingredients
                 command = conn.CreateCommand();
-                command.CommandText = $"SELECT ingredient_name, measure_unit, calories, catname, quantity ";
+                command.CommandText = $"SELECT ingredients.ingredientid, ingredient_name, measure_unit, calories, catname, quantity ";
                 command.CommandText += $"FROM ingredients_to_recipes, ingredients, ingredient_category ";
                 command.CommandText += $"WHERE ingredients_to_recipes.recipeid = '{recipeId}' ";
                 command.CommandText += "AND ingredients.ingredientid = ingredients_to_recipes.ingredientid ";
@@ -60,8 +60,9 @@ namespace BdRestServer.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (dict == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -83,7 +84,9 @@ namespace BdRestServer.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (insertOk > 0)
                 return Request.CreateResponse(HttpStatusCode.OK);

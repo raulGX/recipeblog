@@ -7,6 +7,8 @@ class IngredientsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = { loaded: false }
+  }
+  componentDidMount() {
     this.getIngredients()
   }
   getIngredients() {
@@ -22,7 +24,7 @@ class IngredientsPage extends React.Component {
         <div>
           {this.state.loaded ?
             (
-              <IngredientsTable ingredients={this.state.ingredients} />
+              <IngredientsTable ingredients={this.state.ingredients} myKey="ingredientspage"/>
             ) : (
               <p> Loading...</p>
             )

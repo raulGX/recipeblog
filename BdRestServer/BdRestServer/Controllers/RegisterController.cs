@@ -26,7 +26,9 @@ namespace BdRestServer.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (insertOk > 0)
                 return Request.CreateResponse(HttpStatusCode.OK);

@@ -20,15 +20,16 @@ namespace BdRestServer.Controllers
 
             try {
                 var command = conn.CreateCommand();
-                command.CommandText = $"SELECT recipeid, recipe_name, rating, CONCAT(`last_name`, ' ', `first_name`) as user  FROM recipes, users WHERE recipes.userid = users.userid AND recipes.userid = {userid}";
+                command.CommandText = $"SELECT recipeid, recipe_name, CONCAT(`last_name`, ' ', `first_name`) as user  FROM recipes, users WHERE recipes.userid = users.userid AND recipes.userid = {userid}";
                 conn.Open();
                 dict = SerializeHelper.Serialize(command.ExecuteReader());
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
             }
-
-            conn.Close();
+            finally {
+                conn.Close();
+            }
 
             if (dict == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest);

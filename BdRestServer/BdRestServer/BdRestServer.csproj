@@ -253,7 +253,6 @@
     <Compile Include="Controllers\MyRecipesController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\AdminAuthFilter.cs" />
     <Compile Include="Filters\UserAuthFilter.cs" />
     <Compile Include="Global.asax.cs">

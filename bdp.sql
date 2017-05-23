@@ -33,7 +33,6 @@ CREATE TABLE RECIPES (
   recipe_name varchar(40) NOT NULL,
   description TEXT NOT NULL,
   userid int(7) NOT NULL,
-  rating int(2) DEFAULT NULL,
   PRIMARY KEY (recipeid),
   FOREIGN KEY (userid) REFERENCES USERS (userid),
   UNIQUE INDEX (recipe_name, userid)
@@ -48,32 +47,12 @@ CREATE TABLE INGREDIENTS_TO_RECIPES (
   UNIQUE INDEX (recipeid, ingredientid)
 );
 
-CREATE TABLE RECIPE_RATINGS (
-  userid int(5) NOT NULL,
-  recipeid int(5) NOT NULL,
-  rating int(2) NOT NULL,
-  FOREIGN KEY (userid) REFERENCES USERS (userid),
-  FOREIGN KEY (recipeid) REFERENCES RECIPES (recipeid),
-  UNIQUE INDEX (recipeid, userid),
-  CHECK (rating >=1 AND rating <= 5)
-);
-
 DELIMITER $$
 CREATE TRIGGER `length` BEFORE INSERT ON `users`
  FOR EACH ROW BEGIN
     IF CHAR_LENGTH(NEW.password) <= 6 OR CHAR_LENGTH(NEW.email) <= 6 THEN
     SIGNAL SQLSTATE '10000'
         SET MESSAGE_TEXT = 'check constraint on password failed during insert';
-    END IF;
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE TRIGGER `ratingcheck` BEFORE INSERT ON `RECIPE_RATINGS`
- FOR EACH ROW BEGIN
-    IF NEW.rating < 1 OR NEW.rating > 5 THEN
-    SIGNAL SQLSTATE '10000'
-        SET MESSAGE_TEXT = 'check constraint on rating failed during insert';
     END IF;
 END$$
 DELIMITER ;
@@ -108,9 +87,9 @@ INSERT INTO `ingredients` (`ingredientid`, `ingredient_name`, `measure_unit`, `c
 (5, 'Cheese', 'grams', NULL, 2);
 
 #recipes
-INSERT INTO `recipes` (`recipeid`, `recipe_name`, `description`, `userid`, `rating`) VALUES
-(1, 'French Fries', 'Peel potatoes, fry them, serve', 1, NULL),
-(2, 'Pizza', 'Make dough, spread dough, cover with tomatoes and cheese', 1, NULL);
+INSERT INTO `recipes` (`recipeid`, `recipe_name`, `description`, `userid`) VALUES
+(1, 'French Fries', 'Peel potatoes, fry them, serve', 1),
+(2, 'Pizza', 'Make dough, spread dough, cover with tomatoes and cheese', 1);
 
 #ingredients to recipes
 INSERT INTO `ingredients_to_recipes` (`ingredientid`, `recipeid`, `quantity`) VALUES

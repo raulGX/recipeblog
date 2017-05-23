@@ -7,12 +7,14 @@ class RecipePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = { loaded: false, showModal: false }
-    this.getRecipes()
 
     this.closeModal = this.closeModal.bind(this)
     this.openModal = this.openModal.bind(this)
     this.getRecipes = this.getRecipes.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
+  }
+  componentDidMount() {
+    this.getRecipes()
   }
   closeModal() {
     this.setState({ ...this.state, showModal: false });
@@ -45,7 +47,7 @@ class RecipePage extends React.Component {
     for (let i in this.state.recipes) {
       let row = this.state.recipes[i]
       rows.push(
-        <tr key={row.recipeid}>
+        <tr key={'recipe'+row.recipeid}>
           <td><Link to={"/myrecipes/" + row.recipeid}>{row.recipe_name}</Link></td>
           <td>{row.user}</td>
           <td>{row.rating || 'not yet rated'}</td>

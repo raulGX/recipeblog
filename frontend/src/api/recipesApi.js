@@ -23,7 +23,14 @@ class RecipesApi {
       headers: {
         "authorization": token
       }
-    })
+    }).catch(error => error)
+  }
+  static addIngredientToRecipe(token, ingredient) {
+    return axios.post(constants.api + 'ingredients/' + ingredient.recipeid, ingredient, {
+      headers: {
+        "authorization": token
+      }
+    }).catch(error => error)
   }
 }
 

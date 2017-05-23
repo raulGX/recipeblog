@@ -1,11 +1,11 @@
 import React from 'react'
 
-const IngredientsTable = ({ ingredients }) => {
+const IngredientsTable = ({ ingredients, myKey }) => {
   let rows = [];
   for (let i in ingredients) {
     let row = ingredients[i]
     rows.push(
-      <tr key={row.ingredientid}>
+      <tr key={myKey+row.ingredientid}>
         <td>{row.ingredient_name}</td>
         <td>{row.measure_unit}</td>
         <td>{row.calories || 'not defined'}</td>

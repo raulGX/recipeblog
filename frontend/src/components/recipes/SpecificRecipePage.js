@@ -27,7 +27,7 @@ class SpecificRecipePage extends React.Component {
                 <div>
                   <p>{this.state.description}</p>
                   <h3>Ingredients: </h3>
-                  <IngredientsTable ingredients={this.state.ingredients} />
+                  <IngredientsTable ingredients={this.state.ingredients} myKey="recipespecific"/>
                 </div>
               </div>) : (
               <p>Loading...</p>
