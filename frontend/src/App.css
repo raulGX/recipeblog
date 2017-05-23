@@ -7,3 +7,9 @@
 .input-group {
   margin-bottom: 10px
 }
+.display-true {
+  display: block!important;
+}
+.display-false {
+  display: none;
+}
