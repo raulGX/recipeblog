@@ -15,7 +15,6 @@ import SpecificRecipePage from './components/recipes/SpecificRecipePage';
 import IngredientsPage from './components/ingredients/IngredientsPage';
 import CategoriesPage from './components/categories/CategoriesPage';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css'
 
 render(
