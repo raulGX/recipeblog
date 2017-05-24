@@ -68,7 +68,7 @@ INSERT INTO `users` (`userid`, `email`, `password`, `first_name`, `last_name`, `
 INSERT INTO `ingredient_category` (`catid`, `catname`) VALUES
 (7, 'BEANS'),
 (1, 'COFFEE, TEA, COCOA, and CHOCOLATE'),
-(2, 'DAIRY, CHEESE/CHEESE INGREDIENTS, and EG'),
+(2, 'DAIRY, CHEESE/CHEESE INGREDIENTS, and EGGS'),
 (3, 'FLOURS, GRAINS, SEEDS and MEAL, MALTS'),
 (4, 'FRUITS and VEGETABLES'),
 (5, 'MEAT, POULTRY, SEAFOOD'),
@@ -84,12 +84,16 @@ INSERT INTO `ingredients` (`ingredientid`, `ingredient_name`, `measure_unit`, `c
 (2, 'Vegetable oil', 'tablespoons', NULL, 8),
 (3, 'Flour', 'kg', NULL, 3),
 (4, 'Tomatoes', 'kg', NULL, 4),
-(5, 'Cheese', 'grams', NULL, 2);
+(5, 'Cheese', 'grams', NULL, 2),
+(6, 'Eggs', 'unit', NULL, 2),
+(7, 'Mushrooms', '100g', NULL, 4),
+(9, 'Beef', '100g', NULL, 5);
 
 #recipes
 INSERT INTO `recipes` (`recipeid`, `recipe_name`, `description`, `userid`) VALUES
 (1, 'French Fries', 'Peel potatoes, fry them, serve', 1),
-(2, 'Pizza', 'Make dough, spread dough, cover with tomatoes and cheese', 1);
+(2, 'Pizza', 'Make dough, spread dough, cover with tomatoes and cheese', 1),
+(3, 'Beef WELLINGTON', 'Check on gordonramsay.com website', 3);
 
 #ingredients to recipes
 INSERT INTO `ingredients_to_recipes` (`ingredientid`, `recipeid`, `quantity`) VALUES
@@ -97,4 +101,8 @@ INSERT INTO `ingredients_to_recipes` (`ingredientid`, `recipeid`, `quantity`) VA
 (2, 1, '5.00'),
 (3, 2, '0.50'),
 (4, 2, '0.20'),
-(5, 2, '100.00');
+(5, 2, '100.00'),
+(9, 3, '3'),
+(6, 3, '3'),
+(7, 3, '3'),
+(2, 3, '3');
