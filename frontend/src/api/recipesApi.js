@@ -41,6 +41,15 @@ class RecipesApi {
       }
     }).catch(error => error)
   }
+
+  static updateRecipe(token, recipeId, recipe) {
+    return axios.put(constants.api + 'myRecipes/' + recipeId, recipe, {
+      headers: {
+        "authorization": token
+      }
+    }).catch(error => error)
+  }
+
   static deleteIngredientFromRecipe(ingredient, recipe, token) {
     return axios.delete(constants.api + `myRecipes/ingredients/${ingredient},${recipe}`, {
       headers: {

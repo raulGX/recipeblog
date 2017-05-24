@@ -64,8 +64,32 @@ namespace BdRestServer.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             else
                 return Request.CreateResponse(HttpStatusCode.OK);
-
         }
+
+        [Route("api/myRecipes/{recipeId}")]
+        [Filters.UserAuthFilter]
+        public HttpResponseMessage Put(int recipeId, [FromBody]dynamic value) {
+            MySqlConnection conn = DBHelper.conn;
+            int ok = 0;
+            try {
+                var command = conn.CreateCommand();
+                command.CommandText = $"UPDATE recipes SET recipe_name = '{value.name}', description = '{value.description}' WHERE recipeid = 1";
+                conn.Open();
+                ok = command.ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                ok = 0;
+            }
+            finally {
+                conn.Close();
+            }
+            if (ok < 1)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
         [Route("api/myRecipes/ingredients/{recipe}")]
         public HttpResponseMessage Delete(string recipe) {
             var array = recipe.Split(',');
