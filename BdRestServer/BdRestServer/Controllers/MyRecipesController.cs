@@ -73,7 +73,7 @@ namespace BdRestServer.Controllers
             int ok = 0;
             try {
                 var command = conn.CreateCommand();
-                command.CommandText = $"UPDATE recipes SET recipe_name = '{value.name}', description = '{value.description}' WHERE recipeid = 1";
+                command.CommandText = $"UPDATE recipes SET recipe_name = '{value.name}', description = '{value.description}' WHERE recipeid = {recipeId}";
                 conn.Open();
                 ok = command.ExecuteNonQuery();
             }
